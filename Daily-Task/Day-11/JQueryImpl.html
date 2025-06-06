@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>GenC jQuery Activities</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        background-color: burlywood;
+        color: white;
+        text-align: center;
+        padding: 20px;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid white;
+        margin: auto;
+        color: white;
+      }
+      input,
+      textarea,
+      select {
+        margin: 5px;
+      }
+      .highlight {
+        border: 2px solid red;
+      }
+      .first,
+      .last {
+        background-color: greenyellow;
+        color: black;
+      }
+      .error {
+        color: red;
+        font-size: 14px;
+      }
+      #progress-bar {
+        background-color: #444;
+        width: 100%;
+        height: 30px;
+        margin: 20px auto;
+      }
+      #bar {
+        height: 100%;
+        background-color: green;
+        width: 0%;
+        transition: width 2s;
+      }
+      #movingBtn {
+        position: relative;
+      }
+      #toggleDiv {
+        background-color: darkblue;
+        padding: 10px;
+        display: none;
+      }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  </head>
+  <body>
+    <h1>::GenC Registration Form::</h1>
+    <form id="regForm">
+      Full Name: <input type="text" name="fname" /><br />
+      Email: <input type="email" name="email" /><br />
+      Password: <input type="password" name="pwd" id="pwd" /><span
+        id="strength"
+      ></span
+      ><br />
+      <div id="emailError" class="error"></div>
+      Skills: <input type="checkbox" name="s1" />Java
+      <input type="checkbox" name="s2" />.NET
+      <input type="checkbox" name="s3" />Python<br />
+      Gender: <input type="radio" name="gender" />Male
+      <input type="radio" name="gender" />Female<br />
+      City:
+      <select name="city">
+        <option>Banglore</option>
+        <option>Chennai</option>
+        <option>Hyderabad</option>
+        <option>Pune</option></select
+      ><br />
+      Address: <textarea name="adr" rows="3" cols="20"></textarea><br />
+      DOB: <input type="date" name="dob" /><br />
+      <input type="submit" value="Submit" />
+    </form>
+
+    <hr />
+
+    <!-- Background Color Change -->
+    <button id="bgChangeBtn">Change Background Color</button><br /><br />
+
+    <!-- Dynamic Text -->
+    <p id="dynamicText">Original text</p>
+    <button id="changeTextBtn">Change Text</button><br /><br />
+
+    <!-- Input Border Selector -->
+    <button id="styleInputs">Style All Inputs</button><br /><br />
+
+    <!-- Table for Odd/Even Row Styling -->
+    <table id="sampleTable">
+      <tr>
+        <td>Row 1</td>
+      </tr>
+      <tr>
+        <td>Row 2</td>
+      </tr>
+      <tr>
+        <td>Row 3</td>
+      </tr>
+      <tr>
+        <td>Row 4</td>
+      </tr>
+    </table>
+    <br /><br />
+
+    <!-- Keyboard Alert -->
+    Type here: <input type="text" id="keyboardInput" /><br /><br />
+
+    <!-- Double Click Div -->
+    <div
+      id="dblDiv"
+      style="width: 100px; height: 100px; background-color: gray; margin: auto"
+    >
+      Double Click Me
+    </div>
+    <br />
+
+    <!-- Slide Toggle Section -->
+    <button id="slideBtn">Toggle Section</button>
+    <div id="toggleDiv">Expandable Content</div>
+    <br />
+
+    <!-- Moving Button -->
+    <button id="movingBtn">Click to Move Me</button><br /><br />
+
+    <!-- List Highlighting -->
+    <ul id="nameList">
+      <li>John</li>
+      <li>Jane</li>
+      <li>Jim</li>
+      <li>Jack</li>
+    </ul>
+    <br />
+
+    <!-- Name Filter -->
+    <input type="text" id="filterInput" placeholder="Filter names..." />
+    <ul id="filterList">
+      <li>Alice</li>
+      <li>Bob</li>
+      <li>Charlie</li>
+      <li>David</li>
+    </ul>
+    <br />
+
+    <!-- Fade Toggle Image -->
+    <button id="fadeToggleBtn">Toggle Image</button><br />
+    <img
+      id="toggleImage"
+      src="https://via.placeholder.com/100"
+      alt="Sample"
+    /><br /><br />
+
+    <!-- Progress Bar -->
+    <button id="startProgress">Start Progress</button>
+    <div id="progress-bar"><div id="bar"></div></div>
+
+    <!-- Load Data -->
+    <button id="loadDataBtn">Load Users</button>
+    <ul id="userList"></ul>
+
+    <!-- Live Search -->
+    <input type="text" id="liveSearch" placeholder="Search names..." />
+    <ul id="searchList">
+      <li>John</li>
+      <li>Jane</li>
+      <li>Jacob</li>
+      <li>Julia</li>
+    </ul>
+
+    <script>
+      // Background Change
+      $("#bgChangeBtn").click(function () {
+        $("body").css("background-color", "steelblue");
+      });
+
+      // Change Text
+      $("#changeTextBtn").click(function () {
+        $("#dynamicText").text("Text has been changed!");
+      });
+
+      // Style Inputs
+      $("#styleInputs").click(function () {
+        $("input").addClass("highlight");
+      });
+
+      // Table Row Color
+      $("#sampleTable tr:odd").css("background-color", "gray");
+      $("#sampleTable tr:even").css("background-color", "black");
+
+      // Keyboard Alert
+      $("#keyboardInput").keyup(function (e) {
+        alert("You typed: " + e.key);
+      });
+
+      // Double Click
+      $("#dblDiv").dblclick(function () {
+        $(this).css("background-color", "tomato");
+      });
+
+      // Slide Toggle
+      $("#slideBtn").click(function () {
+        $("#toggleDiv").slideToggle();
+      });
+
+      // Button Move
+      $("#movingBtn").click(function () {
+        $(this).animate({ left: "+=200px" }, 1000);
+      });
+
+      // Highlight First and Last
+      $("#nameList li:first").addClass("first");
+      $("#nameList li:last").addClass("last");
+
+      // Filter List
+      $("#filterInput").on("keyup", function () {
+        const value = $(this).val().toLowerCase();
+        $("#filterList li").filter(function () {
+          $(this).toggle($(this).text().toLowerCase().includes(value));
+        });
+      });
+
+      // Fade Toggle
+      $("#fadeToggleBtn").click(function () {
+        $("#toggleImage").fadeToggle(1000);
+      });
+
+      // Progress Bar
+      $("#startProgress").click(function () {
+        $("#bar").css("width", "0%");
+        $("#bar").animate({ width: "100%" }, 2000);
+      });
+
+      // Load Data (AJAX)
+      $("#loadDataBtn").click(function () {
+        $.get("https://jsonplaceholder.typicode.com/users", function (data) {
+          $("#userList").empty();
+          data.forEach((user) => {
+            $("#userList").append(`<li>${user.name}</li>`);
+          });
+        });
+      });
+
+      // Live Search
+      $("#liveSearch").on("keyup", function () {
+        const value = $(this).val().toLowerCase();
+        $("#searchList li").filter(function () {
+          $(this).toggle($(this).text().toLowerCase().includes(value));
+        });
+      });
+
+      // Password Strength
+      $("#pwd").on("input", function () {
+        const val = $(this).val();
+        let msg = "Weak";
+        if (val.length > 8 && /[A-Z]/.test(val) && /\d/.test(val))
+          msg = "Strong";
+        else if (val.length > 5) msg = "Medium";
+        $("#strength").text(` - Strength: ${msg}`);
+      });
+
+      // Real-time validation
+      $("input[name='email']").on("input", function () {
+        const val = $(this).val();
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!regex.test(val)) {
+          $("#emailError").text("Invalid email format.");
+        } else {
+          $("#emailError").text("");
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,2 @@
+Conflicting change from main branch
+Added new feature from feature-branch

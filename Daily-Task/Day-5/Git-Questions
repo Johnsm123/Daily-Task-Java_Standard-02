@@ -1,0 +1,16 @@
+Merging and Handling Conflicts:
+git checkout -b feature-branch  # Create and switch to a new branch
+git add feature.txt  # Stage changes
+git commit -m "Added new feature"  # Commit changes
+git checkout main  # Switch to the main branch
+git merge feature-branch  # Merge feature branch into main
+git diff  # Compare changes between branches
+git add conflict-file.txt  # Stage resolved conflict file
+git commit -m "Resolved merge conflict"  # Complete the merge
+______________
+Git Stashing
+git stash  # Save changes without committing
+git stash list  # View all stashed changes
+git stash pop  # Apply the most recent stash
+git stash apply stash@{1}  # Apply a specific stash
+git stash clear  # Remove all stashed changes
