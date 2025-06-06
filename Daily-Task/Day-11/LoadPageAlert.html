@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>jQuery Activities</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+      section {
+        margin: 20px;
+        padding: 10px;
+        border: 1px solid #999;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+      }
+      h2 {
+        cursor: pointer;
+        background-color: #e3e3e3;
+        padding: 10px;
+        margin: 0;
+        border-radius: 8px 8px 0 0;
+      }
+      .content {
+        padding: 10px;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- jQuery Activities -->
+
+    <section>
+      <h2>1. Basic jQuery Setup</h2>
+      <div class="content">
+        <button id="alertBtn">Reload page to see alert</button>
+        <p id="text">Original Text</p>
+        <button id="changeText">Change Text</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. Selectors in jQuery</h2>
+      <div class="content">
+        <p>Paragraph 1</p>
+        <p>Paragraph 2</p>
+        <div class="box">Box 1</div>
+        <div class="box">Box 2</div>
+        <div class="box">Box 3</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. Event Handling in jQuery</h2>
+      <div class="content">
+        <button id="clickMe">Click Me</button>
+        <p id="hoverText">Hover over this text.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. Animations in jQuery</h2>
+      <div class="content">
+        <img src="jquery.png" id="fadeImage" />
+        <button id="fadeBtn">Fade Out</button><br /><br />
+        <button id="toggleMenu">Toggle Menu</button>
+        <div id="menu" style="display: none">
+          <p>Menu Item 1</p>
+          <p>Menu Item 2</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>5. jQuery Traversing</h2>
+      <div class="content">
+        <div style="padding: 10px">
+          <span>Child Span</span>
+        </div>
+        <p>First Paragraph</p>
+        <p id="target">Second Paragraph</p>
+        <p>Third Paragraph</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>6. jQuery Effects</h2>
+      <div class="content">
+        <p id="para">This is a paragraph.</p>
+        <button id="hideBtn">Hide</button>
+        <button id="showBtn">Show</button><br /><br />
+
+        <h3 class="question">What is jQuery?</h3>
+        <p class="answer" style="display: none">
+          jQuery is a JavaScript library.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>7. jQuery AJAX</h2>
+      <div class="content">
+        <button id="fetchData">Get Joke</button>
+        <p id="joke"></p>
+        <form id="myForm">
+          Name: <input type="text" id="name" />
+          <button type="submit">Submit Name</button>
+        </form>
+        <p id="response"></p>
+      </div>
+    </section>
+
+    <section>
+      <h2>8. jQuery Form Validation</h2>
+      <div class="content">
+        <form id="form1">
+          <input type="text" id="input1" placeholder="Enter something" />
+          <button type="submit">Submit</button>
+        </form>
+        <br />
+        <form id="emailForm">
+          <input type="text" id="email" placeholder="Enter your email" />
+          <button type="submit">Submit Email</button>
+        </form>
+      </div>
+    </section>
+
+    <script>
+      // Section toggle
+      $("h2").click(function () {
+        $(this).next(".content").slideToggle();
+      });
+
+      // 1. Alert on load
+      $(document).ready(function () {
+        alert("Page Loaded!");
+      });
+
+      $("#changeText").click(function () {
+        $("#text").text("Text Changed!");
+      });
+
+      // 2. Selectors
+      $("p").css("color", "blue");
+      $(".box").css("background-color", "lightgreen");
+
+      // 3. Events
+      $("#clickMe").click(function () {
+        alert("Button Clicked!");
+      });
+      $("#hoverText").hover(
+        function () {
+          $(this).text("Mouse is over me!");
+        },
+        function () {
+          $(this).text("Hover over this text.");
+        }
+      );
+
+      // 4. Animations
+      $("#fadeBtn").click(function () {
+        $("#fadeImage").fadeOut();
+      });
+      $("#toggleMenu").click(function () {
+        $("#menu").slideToggle();
+      });
+
+      // 5. Traversing
+      $("span").parent().css("background-color", "yellow");
+      $("#target").next().css("font-weight", "bold");
+
+      // 6. Effects
+      $("#hideBtn").click(function () {
+        $("#para").hide();
+      });
+      $("#showBtn").click(function () {
+        $("#para").show();
+      });
+      $(".question").click(function () {
+        $(".answer").toggle();
+      });
+
+      // 7. AJAX
+      $("#fetchData").click(function () {
+        $.get("https://api.chucknorris.io/jokes/random", function (data) {
+          $("#joke").text(data.value);
+        });
+      });
+
+      $("#myForm").submit(function (e) {
+        e.preventDefault();
+        let userName = $("#name").val();
+        $.post(
+          "https://jsonplaceholder.typicode.com/posts",
+          { name: userName },
+          function (data) {
+            $("#response").text("Submitted Name: " + data.name);
+          }
+        );
+      });
+
+      // 8. Form Validation
+      $("#form1").submit(function (e) {
+        if ($("#input1").val() === "") {
+          alert("Field is required!");
+          e.preventDefault();
+        }
+      });
+
+      $("#emailForm").submit(function (e) {
+        var email = $("#email").val();
+        var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!regex.test(email)) {
+          alert("Invalid email format!");
+          e.preventDefault();
+        }
+      });
+    </script>
+  </body>
+</html>
