@@ -13,7 +13,7 @@ class Product {
     }
 
     void display() {
-        System.out.println(id + " | " + name + " | ₹" + price);
+        System.out.println(id + " | " + name + " | Rs" + price);
     }
 }
 

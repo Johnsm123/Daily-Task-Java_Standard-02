@@ -9,10 +9,10 @@ public class Book {
         this.price = price;
     }
     void displayDetails(){
-        System.out.println("Title: "+ title);
-        System.out.println("Author: "+ author);
-        System.out.println("Price: Rs "+ price);
-    }
+     System.out.println("Title: "+ title);
+       System.out.println("Author: "+ author);
+       System.out.println("Price: Rs "+ price);
+   }
 }
 
 class BookCreate{

@@ -15,22 +15,42 @@ public class Main {
 //        emp2.displayDetails();
 //        emp3.displayDetails();
 
+//
+//        Scanner sc = new Scanner(System.in);
+//        System.out.println("Enter name: ");
+//        String name = sc.nextLine();
+//
+//        System.out.println("Enter age: ");
+//        int age = sc.nextInt();
+//
+//        System.out.println("Enter salary: ");
+//        double salary = sc.nextInt();
+//
+//
+//        Employee emp = new Employee(name,age,salary);
+//        System.out.println("\nEmployee Details: ");
+//        emp.displayEmployeeDetails();
 
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter name: ");
-        String name = sc.nextLine();
 
-        System.out.println("Enter age: ");
-        int age = sc.nextInt();
+        Scanner scanner = new Scanner(System.in);
+        Calculator calc = new Calculator();
 
-        System.out.println("Enter salary: ");
-        double salary = sc.nextInt();
+        try {
+            System.out.print("Enter first number: ");
+            double num1 = scanner.nextDouble();
 
+            System.out.print("Enter second number: ");
+            double num2 = scanner.nextDouble();
 
-        Employee emp = new Employee(name,age,salary);
-        System.out.println("\nEmployee Details: ");
-        emp.displayEmployeeDetails();
+            System.out.println("Addition: " + calc.add(num1, num2));
+            System.out.println("Subtraction: " + calc.subtract(num1, num2));
+            System.out.println("Multiplication: " + calc.multiply(num1, num2));
 
+        } catch (java.util.InputMismatchException e) {
+            System.out.println("Error: Please enter valid numbers");
+        } finally {
+            scanner.close();
+        }
 
 
     }
