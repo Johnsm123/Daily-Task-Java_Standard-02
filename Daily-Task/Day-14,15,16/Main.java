@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class Main {
@@ -32,26 +35,48 @@ public class Main {
 //        emp.displayEmployeeDetails();
 
 
+//        Scanner scanner = new Scanner(System.in);
+//        Calculator calc = new Calculator();
+//
+//        try {
+//            System.out.print("Enter first number: ");
+//            double num1 = scanner.nextDouble();
+//
+//            System.out.print("Enter second number: ");
+//            double num2 = scanner.nextDouble();
+//
+//            System.out.println("Addition: " + calc.add(num1, num2));
+//            System.out.println("Subtraction: " + calc.subtract(num1, num2));
+//            System.out.println("Multiplication: " + calc.multiply(num1, num2));
+//
+//        } catch (java.util.InputMismatchException e) {
+//            System.out.println("Error: Please enter valid numbers");
+//        } finally {
+//            scanner.close();
+//        }
+
         Scanner scanner = new Scanner(System.in);
-        Calculator calc = new Calculator();
+        System.out.println("Enter a future event date (YYYY-MM-DD): ");
+        String inputDate = scanner.nextLine();
 
         try {
-            System.out.print("Enter first number: ");
-            double num1 = scanner.nextDouble();
+            LocalDate eventDate = LocalDate.parse(inputDate);
+            LocalDate today = LocalDate.now();
+            if (eventDate.isBefore(today) || eventDate.isEqual(today)) {
+                System.out.println("Please enter a future date.");
+                return;
+            }
 
-            System.out.print("Enter second number: ");
-            double num2 = scanner.nextDouble();
-
-            System.out.println("Addition: " + calc.add(num1, num2));
-            System.out.println("Subtraction: " + calc.subtract(num1, num2));
-            System.out.println("Multiplication: " + calc.multiply(num1, num2));
-
-        } catch (java.util.InputMismatchException e) {
-            System.out.println("Error: Please enter valid numbers");
+            Period period = Period.between(today, eventDate);
+            System.out.printf("Your event is in %d months and %d days.%n",
+                    period.getMonths(), period.getDays());
+        } catch (DateTimeParseException e) {
+            System.out.println("Invalid date format. Please use YYYY-MM-DD.");
         } finally {
             scanner.close();
         }
-
-
     }
 }
+
+
+

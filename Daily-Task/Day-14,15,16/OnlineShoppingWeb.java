@@ -26,9 +26,9 @@ class Customer {
         this.name = name;
     }
 
-    void addToCart(Product p) {
-        cart.add(p);
-        System.out.println(p.name + " added to cart.");
+    void addToCart(Product pr) {
+        cart.add(pr);
+        System.out.println(pr.name + " added to cart.");
     }
 
     void showCart() {
