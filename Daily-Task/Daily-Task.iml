@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="AdditionalModuleElements">
+    <content url="file://$MODULE_DIR$" dumb="true">
+      <sourceFolder url="file://$MODULE_DIR$/Day-14,15,16" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Day-22,23,24" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Day-29,30,31" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
+    </content>
+  </component>
+</module>
