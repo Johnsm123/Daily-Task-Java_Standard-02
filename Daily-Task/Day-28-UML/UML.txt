@@ -1,0 +1,236 @@
+UML Design Principles (SOLID)
+Principle	Description	UML Representation
+S: Single Responsibility	A class should have one reason to change	Separate classes for separate roles
+O: Open/Closed	Open for extension, closed for modification	Use abstract classes/interfaces and inheritance
+L: Liskov Substitution	Subclasses should replace base classes without breaking the app	Use generalization with proper behavior in subclasses
+I: Interface Segregation	Many specific interfaces are better than one general-purpose interface	Show multiple interfaces in class diagram
+D: Dependency Inversion	Depend on abstractions, not on concretions	Use interface dependency, represented as dotted arrows
+
+✅ UML Design Patterns (from GoF)
+Design patterns are reusable solutions to common problems in software design. The Gang of Four (GoF) patterns are commonly represented using UML diagrams.
+
+🔶 Creational Design Patterns
+Pattern	Purpose	UML Notation
+Singleton	Ensure a class has only one instance	Class with private constructor and static method
+Factory Method	Delegate instantiation to subclasses	Abstract class with method, subclasses override
+Abstract Factory	Create families of related objects	Interface for object creation, multiple implementations
+Builder	Separate object construction from its representation	Director class + Builder interface
+Prototype	Clone existing objects instead of creating new	clone() method, shown as method in class
+
+🧩 Example: Factory Pattern UML
+lua
+Copy
+Edit
+                +--------------------+
+                |   Product (interface)   |
+                +--------------------+
+                          ▲
+                +--------------------+
+                |  ConcreteProductA  |
+                +--------------------+
+                          ▲
+                +--------------------+
+                |  ConcreteProductB  |
+                +--------------------+
+
+                +--------------------+
+                | Creator (abstract) |
+                +--------------------+
+                | +factoryMethod()   |
+                +--------------------+
+                          ▲
+                +--------------------+
+                | ConcreteCreatorA   |
+                +--------------------+
+🔷 Structural Design Patterns
+Pattern	Purpose	UML Highlights
+Adapter	Convert interface of one class to another	Class connects 2 incompatible interfaces
+Bridge	Separate abstraction from implementation	Composition relationship
+Composite	Tree structure of objects	Component interface + Composite and Leaf classes
+Decorator	Add responsibilities dynamically	Uses composition and interfaces
+Facade	Provide a simplified interface	One class delegates to complex subsystems
+Proxy	Control access to an object	Proxy and real subject implement same interface
+
+🧩 Example: Decorator Pattern UML
+lua
+Copy
+Edit
+       +----------------+
+       |   Component    |
+       +----------------+
+       | +operation()   |
+       +----------------+
+              ▲
+      --------------------
+      |                  |
++-----------+      +----------------+
+| Concrete  |      | Decorator      |
+| Component |      +----------------+
++-----------+      | -component: C  |
+                   | +operation()   |
+                   +----------------+
+                          ▲
+                  +---------------+
+                  | DecoratorImpl |
+                  +---------------+
+🔷 Behavioral Design Patterns
+Pattern	Purpose	UML Highlight
+Observer	One-to-many dependency	Subject notifies all observers
+Strategy	Define a family of algorithms	Context uses Strategy interface
+State	Change behavior based on state	Context delegates to state object
+Command	Encapsulate request as object	Invoker, Command, Receiver
+Template Method	Define steps of algorithm in base class	Abstract class with abstract steps
+
+🧩 Example: Observer Pattern UML
+pgsql
+Copy
+Edit
+           +-------------+
+           |   Subject   |
+           +-------------+
+           | +attach()   |
+           | +detach()   |
+           | +notify()   |
+           +-------------+
+                  ▲
+           +-------------+
+           | ConcreteSubject |
+           +-------------+
+
+     +-------------+        +-------------+
+     |  Observer   |        | Observer    |
+     +-------------+        +-------------+
+     | +update()   |        | +update()   |
+     +-------------+        +-------------+
+           ▲                      ▲
+     +-------------+        +-------------+
+     | ObserverA   |        | ObserverB   |
+     +-------------+        +-------------+
+✅ Summary Table of UML Patterns
+Type	Example Patterns	UML Elements
+Creational	Singleton, Factory, Builder	Class, Abstract Class
+Structural	Adapter, Composite, Facade	Interface, Composition
+Behavioral	Observer, Strategy, State	Interface, Association
+
+📌 Tools to Draw UML:
+Draw.io
+
+Lucidchart
+
+StarUML
+
+PlantUML (code-based UML)
+
+Visual Paradigm
+
+ Use Case Diagram
+📌 Purpose:
+Describes what the system does from a user's perspective (functional requirements).
+
+📦 Elements:
+Actors: External entities (users, systems).
+
+Use Cases: System functionalities.
+
+System Boundary: Encloses use cases.
+
+Associations: Lines connecting actors to use cases.
+
+🧩 Example: Library Management System
+Use Case Diagram
+sql
+Copy
+Edit
+          +------------------------------+
+          |  Library Management System   |
+          |------------------------------|
+          |  o Search Book               |
+          |  o Borrow Book               |
+          |  o Return Book               |
+          |  o Register Member           |
+          +------------------------------+
+            ^           ^          ^
+            |           |          |
+       +--------+   +--------+  +--------+
+       | Student|   |Faculty |  |Librarian|
+       +--------+   +--------+  +--------+
+✅ 2. Class Diagram
+📌 Purpose:
+Describes the static structure: classes, attributes, methods, and relationships.
+
+📦 Elements:
+Class: Rectangle with name, attributes, methods.
+
+Associations: Relationships (1:1, 1:N, etc.)
+
+Inheritance, Aggregation, Composition
+
+🧩 Example: Library System Class Diagram
+pgsql
+Copy
+Edit
++--------------------+
+|     Book           |
++--------------------+
+| -bookId: int       |
+| -title: String     |
+| -author: String    |
++--------------------+
+| +getDetails()      |
++--------------------+
+
+        ▲
+        |
++---------------------+
+|     LibraryItem     | <<abstract>>
++---------------------+
+| -location: String   |
++---------------------+
+| +checkout()         |
++---------------------+
+
++--------------------+         +--------------------+
+|     User           |<>-------|     Book           |
++--------------------+         +--------------------+
+| -userId: int       |         | -bookId            |
+| -name: String      |         | -title             |
++--------------------+         | -author            |
+| +borrowBook()      |         +--------------------+
+
+        ▲
+  ---------------
+  |             |
++--------+   +-----------+
+|Student |   | Faculty   |
++--------+   +-----------+
+✅ 3. Sequence Diagram
+📌 Purpose:
+Shows interaction between objects over time, useful for visualizing a use case scenario.
+
+📦 Elements:
+Actors & Objects (horizontal axis)
+
+Messages (vertical arrows)
+
+Lifelines and Activations
+
+🧩 Example: "Borrow Book" Sequence
+lua
+Copy
+Edit
+Student       LibrarySystem       BookDB
+   |                 |               |
+   |---borrowBook()-->               |
+   |                 |               |
+   |         validateUser()          |
+   |                 |-------------->|
+   |                 |  checkAvailability()  |
+   |                 |<--------------|
+   |                 |    issueBook()       |
+   |<----------------|               |
+✅ Summary
+Diagram	Purpose	Focus
+Use Case	Functional requirements	Users and their interactions
+Class	Static structure	Classes and relationships
+Sequence	Dynamic interaction (per use case)	Time-based message exchange
+
