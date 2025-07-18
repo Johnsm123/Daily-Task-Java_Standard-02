@@ -294,3 +294,237 @@ FROM courier
 WHERE from_address = 'Chicago'
 ORDER BY to_address DESC;
 
+SELECT
+    c.Customer_Name,
+    c.Contact_No,
+    cr.Courier_Id
+FROM
+    CUSTOMER c
+        JOIN
+    COURIER cr ON c.Contact_No = cr.Contact_No
+WHERE
+    cr.Expected_Delivery_Date - cr.Booking_Date < 5
+ORDER BY
+    c.Customer_Name ASC;
+
+SELECT
+    cs1.Courier_Id AS COURIERI,
+    cs2.Courier_Id AS COURIER2,
+    cs1.Actual_Delivered_Date
+FROM
+    COURIER_STATUS cs1
+        JOIN
+    COURIER_STATUS cs2
+    ON cs1.Actual_Delivered_Date = cs2.Actual_Delivered_Date
+        AND cs1.Courier_Id <> cs2.Courier_Id
+ORDER BY
+    cs1.Actual_Delivered_Date DESC,
+    cs1.Courier_Id DESC;
+
+SELECT
+    cs1.Courier_Id AS COURIERI,
+    cs2.Courier_Id AS COURIER2,
+    cs1.Actual_Delivered_Date
+FROM
+    COURIER_STATUS cs1
+        JOIN
+    COURIER_STATUS cs2
+    ON cs1.Actual_Delivered_Date = cs2.Actual_Delivered_Date
+        AND cs1.Courier_Id <> cs2.Courier_Id
+ORDER BY
+    cs1.Actual_Delivered_Date DESC,
+    cs1.Courier_Id DESC;
+
+SELECT
+    Courier_Id,
+    From_Address,
+    To_Address,
+    Contact_No
+FROM
+    Courier
+WHERE
+    Weight = (
+        SELECT MIN(Weight) FROM Courier
+    )
+ORDER BY
+    From_Address ASC;
+
+SELECT
+    c.Courier_Id,
+    b1.Contact_No AS CONTACT_FROM_BRANCH,
+    b2.Contact_No AS CONTACT_TO_BRANCH
+FROM
+    COURIER c
+        JOIN
+    COURIER_STATUS cs ON c.Courier_Id = cs.Courier_Id
+        JOIN
+    BRANCH b1 ON c.Branch_ID = b1.Branch_ID
+        JOIN
+    BRANCH b2 ON cs.Delivered_Branch_ID = b2.Branch_ID
+ORDER BY
+    c.Courier_Id DESC;
+
+SELECT
+    b.Branch_ID,
+    b.Branch_Location,
+    b.Contact_No
+FROM
+    BRANCH b
+WHERE
+    b.Branch_ID NOT IN (
+        SELECT DISTINCT Delivered_Branch_ID
+        FROM COURIER_STATUS
+        WHERE Delivered_Branch_ID IS NOT NULL
+    )
+ORDER BY
+    b.Branch_Location DESC;
+
+SELECT
+    b.Branch_ID,
+    b.Branch_Location,
+    b.Contact_No
+FROM
+    BRANCH b
+WHERE
+    b.Branch_ID NOT IN (
+        SELECT DISTINCT Delivered_Branch_ID
+        FROM COURIER_STATUS
+        WHERE Delivered_Branch_ID IS NOT NULL
+    )
+ORDER BY
+    b.Branch_Location DESC;
+
+
+SELECT
+    staff_name
+FROM
+    Staff
+WHERE
+    staff_id NOT IN (
+        SELECT DISTINCT staff_id
+        FROM Subject
+        WHERE staff_id IS NOT NULL
+    )
+ORDER BY
+    staff_name ASC;
+
+SELECT
+    c.customer_name,
+    c.contact_no,
+    cs.courier_id
+FROM
+    customer c
+        JOIN
+    courier cr ON cr.contact_no = c.contact_no
+        JOIN
+    courier_status cs ON cs.courier_id = cr.courier_id
+WHERE
+    cs.status != 'Delivered'
+ORDER BY
+    c.customer_name;
+
+SELECT
+    b.branch_id,
+    b.branch_location,
+    b.contact_no
+FROM
+    branch b
+        JOIN
+    courier c ON b.branch_id = c.branch_id
+GROUP BY
+    b.branch_id, b.branch_location, b.contact_no
+HAVING
+    COUNT(*) = (
+        SELECT MAX(courier_count)
+        FROM (
+                 SELECT COUNT(*) AS courier_count
+                 FROM courier
+                 GROUP BY branch_id
+             )
+    )
+ORDER BY
+    b.branch_id ASC;
+
+SELECT
+    s.student_name
+FROM
+    student s
+        JOIN
+    mark m ON s.student_id = m.student_id
+        JOIN
+    subject sub ON m.subject_id = sub.subject_id
+WHERE
+    sub.subject_name = 'Software Engineering'
+  AND m.value = (
+    SELECT
+        MAX(m1.value)
+    FROM
+        mark m1
+            JOIN
+        subject sub1 ON m1.subject_id = sub1.subject_id
+    WHERE
+        sub1.subject_name = 'Software Engineering'
+)
+ORDER BY
+    s.student_name;
+
+SELECT
+    s.student_name
+FROM
+    student s
+WHERE
+    NOT EXISTS (
+        SELECT 1
+        FROM mark m
+        WHERE m.student_id = s.student_id
+          AND m.value <= 50
+    )
+ORDER BY
+    s.student_name;
+
+SELECT
+    d.department_name
+FROM
+    department d
+        JOIN
+    student s ON d.department_id = s.department_id
+GROUP BY
+    d.department_name
+HAVING
+    COUNT(*) = (
+        SELECT MIN(student_count)
+        FROM (
+                 SELECT COUNT(*) AS student_count
+                 FROM student
+                 GROUP BY department_id
+             )
+    )
+ORDER BY
+    d.department_name;
+
+SELECT
+    s.student_name,
+    d.department_name,
+    m.value AS marks
+FROM
+    student s
+        JOIN
+    department d ON s.department_id = d.department_id
+        JOIN
+    mark m ON s.student_id = m.student_id
+        JOIN
+    subject sub ON m.subject_id = sub.subject_id
+WHERE
+    sub.subject_name = 'Software Engineering'
+  AND m.value = (
+    SELECT
+        MAX(m1.value)
+    FROM
+        mark m1
+            JOIN
+        subject sub1 ON m1.subject_id = sub1.subject_id
+    WHERE
+        sub1.subject_name = 'Software Engineering'
+)
+ORDER BY
+    s.student_name;
