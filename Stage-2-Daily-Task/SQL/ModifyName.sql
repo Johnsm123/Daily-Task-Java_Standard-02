@@ -528,3 +528,62 @@ WHERE
 )
 ORDER BY
     s.student_name;
+
+CREATE OR REPLACE VIEW customer_details AS
+SELECT
+    c.Customer_Name,
+    c.Contact_No,
+    cr.Courier_Id,
+    cr.Expected_Delivery_Date,
+    cr.Cost
+FROM
+    Customer c
+        JOIN
+    Courier cr ON c.Contact_No = cr.Contact_No
+ORDER BY
+    c.Customer_Name DESC;
+
+CREATE SYNONYM client FOR customer;
+
+    CREATE SEQUENCE branch_sequence
+    START WITH 101
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+
+CREATE INDEX customer_index
+    ON customer (email);
+
+SELECT
+    c.courier_id,
+    cs.to_address,
+    c.weight
+FROM
+    courier c
+        JOIN
+    courier_status cs ON c.courier_id = cs.courier_id
+WHERE
+    c.cost > (
+        SELECT AVG(c2.cost)
+        FROM courier c2
+        WHERE c2.branch_id = c.branch_id
+    )
+ORDER BY
+    cs.to_address ASC,
+    c.weight ASC;
+
+SELECT
+    courier_id,
+    branch_id,
+    UPPER(
+            SUBSTR(from_address, 1, 3) ||    -- First 3 letters of from_address
+            SUBSTR(courier_id, 1, 2) ||      -- First 2 letters of courier_id
+            SUBSTR(to_address, 1, 3)         -- First 3 letters of to_address
+    ) AS courier_code
+FROM
+    courier
+WHERE
+    booking_date > TO_DATE('31-03-2020', 'DD-MM-YYYY')
+ORDER BY
+    booking_date ASC;
+
